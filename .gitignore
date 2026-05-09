@@ -1,0 +1,6 @@
+# State files — reset on each deploy
+workspace/skills/*/state.json
+/tmp/
+*.log
+__pycache__/
+*.pyc
