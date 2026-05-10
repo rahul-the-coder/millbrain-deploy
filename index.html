@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MillBrain — AI Maintenance Assistant</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0d1117;
+      color: #e6edf3;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .card {
+      max-width: 680px;
+      width: 100%;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #1f3a1f;
+      color: #3fb950;
+      border: 1px solid #238636;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+      color: #f0f6fc;
+    }
+
+    .subtitle {
+      color: #8b949e;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #30363d;
+      margin: 2rem 0;
+    }
+
+    p {
+      color: #c9d1d9;
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 1rem 0.5rem;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #f0f6fc;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: #8b949e;
+      margin-top: 0.25rem;
+    }
+
+    .open-btn {
+      display: inline-block;
+      background: #238636;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.8rem 2.2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .open-btn:hover { background: #2ea043; }
+
+    .tech-stack {
+      margin-top: 2rem;
+      font-size: 0.8rem;
+      color: #484f58;
+    }
+
+    .tech-stack span {
+      margin: 0 0.4rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="badge">Live Demo</div>
+    <h1>MillBrain</h1>
+    <div class="subtitle">AI Maintenance Assistant — Paper Manufacturing Plant</div>
+
+    <hr class="divider" />
+
+    <p>
+      MillBrain is an autonomous industrial agent that monitors 100 machines in real time.
+      When an equipment alarm fires, it queries a plant SQLite database for sensor readings
+      and maintenance history, scores component failure risk using a custom confidence formula,
+      retrieves relevant troubleshooting procedures via RAG, and delivers a structured
+      diagnosis with a recommended action — all in seconds.
+    </p>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value">100</div>
+        <div class="stat-label">Machines monitored</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">13</div>
+        <div class="stat-label">SOP documents (RAG)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">8</div>
+        <div class="stat-label">Diagnostic skills</div>
+      </div>
+    </div>
+
+    <a class="open-btn" href="https://millbrain.fly.dev" target="_blank" rel="noopener">
+      Open Agent →
+    </a>
+
+    <div class="tech-stack">
+      <span>Claude Sonnet 4.6</span>·
+      <span>OpenClaw</span>·
+      <span>SQLite</span>·
+      <span>ChromaDB</span>·
+      <span>Fly.io</span>
+    </div>
+  </div>
+</body>
+</html>
