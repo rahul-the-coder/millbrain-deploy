@@ -68,10 +68,10 @@ Every work order draft must include the full Safety / LOTO section. Do not mark 
 
 | Resource | Path (inside container) |
 |----------|------------------------|
-| SQLite database | `/home/node/.openclaw/workspace/millbrain.db` |
-| RAG search script | `/home/node/.openclaw/workspace/search_rag.py` |
-| ChromaDB vector store | `/home/node/.openclaw/workspace/chroma_db/` |
-| Skill state files | `/home/node/.openclaw/workspace/skills/*/state.json` |
+| SQLite database | `/data/workspace/millbrain.db` |
+| RAG search script | `/data/workspace/search_api.py` |
+| ChromaDB vector store | `/data/workspace/chroma_db/` |
+| Skill state files | `/data/workspace/skills/*/state.json` |
 
 ---
 
