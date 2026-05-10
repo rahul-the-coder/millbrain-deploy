@@ -18,7 +18,7 @@ if curl -s http://localhost:5555/health > /dev/null 2>&1; then
   echo "API_STATUS=running"
 else
   echo "API_STATUS=starting"
-  PYTHONPATH=/data/pypkgs nohup python3 /data/workspace/search_api.py \
+  nohup /data/venv/bin/python3 /data/workspace/search_api.py \
     --db /data/workspace/chroma_db \
     > /tmp/search_api.log 2>&1 &
   sleep 5
