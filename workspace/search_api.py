@@ -1,18 +1,12 @@
 #!/usr/bin/env python3
 """
-search_api.py — Thin HTTP wrapper around search_rag.py.
+search_api.py — Thin HTTP wrapper around ChromaDB RAG search.
 
-The OpenClaw container has Python but not chromadb/sentence_transformers.
-This server runs on the WSL host (using the millbrain venv) and exposes
-the RAG search over HTTP so the container can reach it via host.docker.internal.
+Usage (on Fly machine):
+    /data/venv/bin/python3 /data/workspace/search_api.py --db /data/workspace/chroma_db
 
-Usage:
-    source venv_millbrain/bin/activate
-    python scripts/search_api.py            # listens on 0.0.0.0:5555
-    python scripts/search_api.py --port 5556
-
-From the container:
-    curl "http://host.docker.internal:5555/search?q=voltage+anomaly+troubleshooting"
+From OpenClaw skills:
+    curl "http://localhost:5555/search?q=voltage+anomaly+troubleshooting"
 """
 
 import argparse
@@ -22,8 +16,6 @@ import chromadb
 from flask import Flask, jsonify, request
 from sentence_transformers import SentenceTransformer
 
-ROOT = Path(__file__).resolve().parent.parent
-CHROMA_DIR = ROOT / "data" / "chroma_db"
 COLLECTION_NAME = "millbrain_docs"
 MODEL_NAME = "BAAI/bge-small-en-v1.5"
 BGE_PREFIX = "Represent this sentence for searching relevant passages: "
@@ -31,15 +23,8 @@ TOP_K = 3
 PREVIEW_CHARS = 400
 
 app = Flask(__name__)
-
-# Load model and collection once at startup — not per request
-print(f"Loading embedding model ({MODEL_NAME}) ...", flush=True)
-_model = SentenceTransformer(MODEL_NAME)
-
-print(f"Connecting to ChromaDB at {CHROMA_DIR} ...", flush=True)
-_client = chromadb.PersistentClient(path=str(CHROMA_DIR))
-_collection = _client.get_collection(COLLECTION_NAME)
-print(f"Ready. Collection has {_collection.count()} chunks.", flush=True)
+_model = None
+_collection = None
 
 
 @app.get("/health")
@@ -84,13 +69,24 @@ def search():
 
 
 def parse_args():
+    default_db = Path(__file__).resolve().parent / "chroma_db"
     p = argparse.ArgumentParser()
     p.add_argument("--port", type=int, default=5555)
     p.add_argument("--host", default="0.0.0.0")
+    p.add_argument("--db", type=Path, default=default_db)
     return p.parse_args()
 
 
 if __name__ == "__main__":
     args = parse_args()
+
+    print(f"Loading embedding model ({MODEL_NAME}) ...", flush=True)
+    _model = SentenceTransformer(MODEL_NAME)
+
+    print(f"Connecting to ChromaDB at {args.db} ...", flush=True)
+    _client = chromadb.PersistentClient(path=str(args.db))
+    _collection = _client.get_collection(COLLECTION_NAME)
+    print(f"Ready. Collection has {_collection.count()} chunks.", flush=True)
+
     print(f"Search API listening on {args.host}:{args.port}", flush=True)
     app.run(host=args.host, port=args.port)
